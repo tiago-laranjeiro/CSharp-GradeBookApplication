@@ -31,17 +31,13 @@ namespace GradeBook.GradeBooks
             {
                 return 'B';
             }
-            else if (averageGrade >= grades[threshold * 2 - 1])
+            else if (averageGrade >= grades[threshold * 3 - 1])
             {
                 return 'C';
             }
-            else if (averageGrade >= grades[threshold * 3 - 1])
-            {
-                return 'D';
-            }
             else if (averageGrade >= grades[threshold * 4 - 1])
             {
-                return 'E';
+                return 'D';
             }
             return 'F';
         }
