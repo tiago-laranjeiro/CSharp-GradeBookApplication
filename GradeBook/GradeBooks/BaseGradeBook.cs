@@ -11,14 +11,21 @@ namespace GradeBook.GradeBooks
 {
     public abstract class BaseGradeBook
     {
+        public bool IsWeighted { get; set; }
         public GradeBookType Type { get; set; }
         public string Name { get; set; }
         public List<Student> Students { get; set; }
 
-        public BaseGradeBook(string name)
+        public BaseGradeBook(string name, bool weighted)
         {
             Name = name;
+            IsWeighted = weighted;
             Students = new List<Student>();
+        }
+
+        protected BaseGradeBook(string name)
+        {
+            Name = name;
         }
 
         public void AddStudent(Student student)
@@ -107,18 +114,37 @@ namespace GradeBook.GradeBooks
 
         public virtual double GetGPA(char letterGrade, StudentType studentType)
         {
-            switch (letterGrade)
+            if (!IsWeighted)
             {
-                case 'A':
-                    return 4;
-                case 'B':
-                    return 3;
-                case 'C':
-                    return 2;
-                case 'D':
-                    return 1;
-                case 'F':
-                    return 0;
+                switch (letterGrade)
+                {
+                    case 'A':
+                        return 4;
+                    case 'B':
+                        return 3;
+                    case 'C':
+                        return 2;
+                    case 'D':
+                        return 1;
+                    case 'F':
+                        return 0;
+                }
+            }
+            else if (IsWeighted && (studentType==StudentType.Honors || studentType==StudentType.DualEnrolled))
+            {
+                switch (letterGrade)
+                {
+                    case 'A':
+                        return 5;
+                    case 'B':
+                        return 4;
+                    case 'C':
+                        return 3;
+                    case 'D':
+                        return 2;
+                    case 'F':
+                        return 1;
+                }
             }
             return 0;
         }
